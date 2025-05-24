@@ -1,6 +1,6 @@
 const express = require('express');
 
-const {ServerConfig , LoggerConfig} =  require('./config');
+const {ServerConfig , Logger} =  require('./config');
 
 const app = express();
 
