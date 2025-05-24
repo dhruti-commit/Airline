@@ -18,7 +18,10 @@ class CrudRepository{
 
     async destroy(data){
         try{
-            const response = await this.model.destroy({where : {id : data}});
+            const response = await this.model.destroy(
+                {where :
+                     {id : data}
+                });
             return response;
 
         }catch(error){
@@ -49,3 +52,5 @@ class CrudRepository{
         }
     }
 }
+
+module.exports = CrudRepository;
