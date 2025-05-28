@@ -8,8 +8,6 @@ const { StatusCodes } = require("http-status-codes");
  */
 
 async function createAirplane(req, res){
-
-
     console.log(req.body);
     try{
         const response = await AirplaneService.createAirplane({
@@ -28,8 +26,7 @@ async function createAirplane(req, res){
     }catch(error){
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).
         json({
-            success : 
-            false,
+            success : false,
             message : "Something went wrong which not create airplane in controller",
             data : {},
             error : error

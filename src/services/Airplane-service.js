@@ -6,8 +6,8 @@ async function createAirplane(data) {
     try{
          const airplane = await airplaneRepository.create(data);
          return airplane;
-
-    }catch(error){
+    }
+    catch(error){
         throw error;
     }
     

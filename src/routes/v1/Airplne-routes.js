@@ -4,6 +4,10 @@ const router = express.Router();
 
 const { AirplaneController } = require('../../controller');
 
-router.post('/', AirplaneController.createAirplane);
+const { AirplaneMiddleware } = require("../../middleware");
+
+router.post('/',
+    AirplaneMiddleware.validateRequest ,
+     AirplaneController.createAirplane);
 
 module.exports = router;
