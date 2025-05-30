@@ -1,4 +1,4 @@
-const {AirplaneService} = require("../services");
+const {CityService} = require("../services");
 
 const { StatusCodes } = require("http-status-codes");
 
@@ -9,11 +9,11 @@ const { ErrorResponse, SuccessReponse} = require('../utils/common');
  * req.body{modelNumber : 'airbus203', capacity : '300'}
  */
 
-async function createAirplane(req, res){
+async function createCity(req, res){
     try{
-        const response = await AirplaneService.createAirplane({
-            modelNumber : req.body.modelNumber,
-            capacity : req.body.capacity
+        console.log("Control reaches in controller");
+            const response = await CityService.createCity({
+            name : req.body.name
         });
         SuccessReponse.data = response;
         return res
@@ -27,9 +27,9 @@ async function createAirplane(req, res){
     }
 }
 
-async function getAirplanes(req, res){
+async function getCities(req, res){
     try{
-        const response = await AirplaneService.getAirplanes();
+        const response = await CityService.getCitites();
         SuccessReponse.data = response;
         return res
                .status(StatusCodes.OK)
@@ -49,9 +49,9 @@ async function getAirplanes(req, res){
  * req.param.id
  * 
  */
-async function getAirplane(req, res){
+async function getCity(req, res){
     try{
-        const response = await AirplaneService.getAirplane(req.params.id);
+        const response = await CityService.getCity(req.params.id);
         SuccessReponse.data = response;
         return res
                .status(StatusCodes.OK)
@@ -64,9 +64,9 @@ async function getAirplane(req, res){
     }
 }
 
-async function destroyAirplane(req, res){
+async function destroyCity(req, res){
     try{
-        const response = await AirplaneService.destroyAirplane(req.params.id);
+        const response = await CityService.destroyCity(req.params.id);
         SuccessReponse.data = response;
         return res
                .status(StatusCodes.OK)
@@ -80,8 +80,8 @@ async function destroyAirplane(req, res){
 }
 
 module.exports = {
-    createAirplane, 
-    getAirplane,
-    getAirplanes, 
-    destroyAirplane
+   createCity,
+   getCities,
+   getCity,
+   destroyCity
 }
