@@ -1,20 +1,23 @@
-const {CityService} = require("../services");
+const {AirportService} = require("../services");
 
 const { StatusCodes } = require("http-status-codes");
 
 const { ErrorResponse, SuccessReponse} = require('../utils/common');
 
 /***
- * POST : /city
- * body : {name : 'Varanasi'}
+ * POST : /airport
+ * body : {name : 'Varanasi',cityID : 1,address : null, code : 'VRN"}
  */
 
-async function createCity(req, res){
+async function createAirport(req, res){
     try{
-        console.log("Control reaches in controller");
-            const response = await CityService.createCity({
-            name : req.body.name
+        const response = await AirportService.createAirport({
+           name : req.body.name,
+           code : req.body.code,
+           address : req.body.req,
+           cityID : req.body.cityID
         });
+
         SuccessReponse.data = response;
         return res
                .status(StatusCodes.CREATED)
@@ -27,9 +30,9 @@ async function createCity(req, res){
     }
 }
 
-async function getCities(req, res){
+async function getAirports(req, res){
     try{
-        const response = await CityService.getCitites();
+        const response = await AirportService.getAirports();
         SuccessReponse.data = response;
         return res
                .status(StatusCodes.OK)
@@ -44,10 +47,14 @@ async function getCities(req, res){
 
 
 
-
-async function getCity(req, res){
+/**
+ * GET : /airport/:id
+ * req.param.id
+ * 
+ */
+async function getAirport(req, res){
     try{
-        const response = await CityService.getCity(req.params.id);
+        const response = await AirportService.getAirport(req.params.id);
         SuccessReponse.data = response;
         return res
                .status(StatusCodes.OK)
@@ -60,9 +67,9 @@ async function getCity(req, res){
     }
 }
 
-async function destroyCity(req, res){
+async function destroyAirport(req, res){
     try{
-        const response = await CityService.destroyCity(req.params.id);
+        const response = await AirportService.destroyAirport(req.params.id);
         SuccessReponse.data = response;
         return res
                .status(StatusCodes.OK)
@@ -76,8 +83,8 @@ async function destroyCity(req, res){
 }
 
 module.exports = {
-   createCity,
-   getCities,
-   getCity,
-   destroyCity
+    createAirport, 
+    getAirport,
+    getAirports, 
+    destroyAirport
 }
