@@ -4,6 +4,7 @@ const flightRepository = new FlightRepository();
 
 const { AppError } = require('../utils/error');
 
+const { Op } = require('sequelize');
 const { StatusCodes } = require('http-status-codes');
 
 async function createFlight(data) {
@@ -25,9 +26,26 @@ async function createFlight(data) {
     }
 }
 
-async function getFlights(){
+async function getFlights(query){
+      var customFilters = {};
+      if(query.trips){
+        [ departureAirportId, arrivalAirportId ] = query.trips.split("-");
+        if(departureAirportId === arrivalAirportId){
+            return new AppError('No such flight available', StatusCodes.BAD_REQUEST);
+        }
+        customFilters.departureAirportId = departureAirportId;
+        customFilters.arrivalAirportId = arrivalAirportId;
+
+        if(query.price){
+            [minPrice, maxPrice] = query.price.split("-");
+            customFilters.price = {
+                [Op.between] : [minPrice, maxPrice]
+            }
+        }
+      }
+
       try{
-        const flights = flightRepository.getAll();
+        const flights = flightRepository.getFlights(customFilters);
         return flights;
       }catch(err) { 
           throw new AppError('Cannot get flights', StatusCodes.INTERNAL_SERVER_ERROR);

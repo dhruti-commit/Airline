@@ -47,7 +47,7 @@ async function createFlight(req, res){
 
 async function getFlights(req, res){
     try{
-        let flights = await FlightService.getFlights();
+        let flights = await FlightService.getFlights(req.query);
         SuccessReponse.data = flights;
         console.log(flights);
         return res.json(SuccessReponse)
@@ -55,7 +55,7 @@ async function getFlights(req, res){
     }catch(error){
         ErrorResponse.error = error;
         return res.json(ErrorResponse)
-        .status(error.statusCode);
+        .status(StatusCodes.INTERNAL_SERVER_ERROR);
     }
 }
 
